@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RootCalcHolder extends RecyclerView.ViewHolder {
     View view;
-    TextView headerTextView;
-    TextView calcResultTextView;
+    TextView descriptionTextView;
     ImageView deleteRootBtn;
     ImageView stopCalcBtn;
     ProgressBar calcProgressBar;
@@ -19,8 +18,7 @@ public class RootCalcHolder extends RecyclerView.ViewHolder {
     public RootCalcHolder(@NonNull View itemView) {
         super(itemView);
         this.view = itemView;
-        this.headerTextView = itemView.findViewById(R.id.textViewRootCalculationHeader);
-        this.calcResultTextView = itemView.findViewById(R.id.textViewRootCalculationResult);
+        this.descriptionTextView = itemView.findViewById(R.id.textViewRootCalculationDescription);
         this.deleteRootBtn = itemView.findViewById(R.id.buttonDeleteRoot);
         this.stopCalcBtn = itemView.findViewById(R.id.buttonStopRootCalculation);
         this.calcProgressBar = itemView.findViewById(R.id.progressBarCalculationProgress);

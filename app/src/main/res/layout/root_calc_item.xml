@@ -7,54 +7,48 @@
     android:minHeight="55dp">
 
     <TextView
-        android:id="@+id/textViewRootCalculationHeader"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewRootCalculationDescription"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:textColor="#555252"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayoutButtons"
         app:layout_constraintStart_toStartOf="@id/progressBarCalculationProgress"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="calculating root for 123456..." />
 
-    <TextView
-        android:id="@+id/textViewRootCalculationResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewRootCalculationHeader"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/buttonDeleteRoot"
+    <LinearLayout
+        android:id="@+id/linearLayoutButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_delete"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/buttonStopRootCalculation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/buttonDeleteRoot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_delete"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/buttonStopRootCalculation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_cancel" />
+    </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/progressBarCalculationProgress"

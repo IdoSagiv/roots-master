@@ -53,14 +53,13 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         holder.stopCalcBtn.setVisibility(View.VISIBLE);
         holder.calcProgressBar.setVisibility(View.VISIBLE);
         holder.deleteRootBtn.setVisibility(View.GONE);
-        holder.calcResultTextView.setVisibility(View.GONE);
 
-        holder.headerTextView.setText(String.format("Calculating roots for %d...", item.getNumber()));
+        holder.descriptionTextView.setText(String.format("Calculating roots for %d...", item.getNumber()));
 
         // todo: change progress from somewhere else????
         holder.calcProgressBar.setProgress(item.getCalculationProgress());
 
-        holder.calcResultTextView.setOnClickListener(v -> {
+        holder.stopCalcBtn.setOnClickListener(v -> {
             if (onCancelCalcCallback == null) return;
             onCancelCalcCallback.onClick(item);
         });
@@ -68,15 +67,13 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
 
     private void setHolderToCalcDoneMode(RootCalcHolder holder, RootCalcItem item) {
         holder.deleteRootBtn.setVisibility(View.VISIBLE);
-        holder.calcResultTextView.setVisibility(View.VISIBLE);
         holder.stopCalcBtn.setVisibility(View.GONE);
         holder.calcProgressBar.setVisibility(View.GONE);
 
-        holder.headerTextView.setText(String.format("Roots for %d:", item.getNumber()));
         if (item.getRoot1() == 1 || item.getRoot2() == 1) {
-            holder.calcResultTextView.setText("number is prime");
+            holder.descriptionTextView.setText("%d is prime");
         } else {
-            holder.headerTextView.setText(String.format("%dx%d", item.getRoot1(), item.getRoot2()));
+            holder.descriptionTextView.setText(String.format("%d=%dx%d", item.getNumber(), item.getRoot1(), item.getRoot2()));
         }
 
         holder.deleteRootBtn.setOnClickListener(v -> {
