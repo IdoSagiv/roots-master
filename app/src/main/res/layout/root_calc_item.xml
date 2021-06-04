@@ -34,6 +34,7 @@
             android:id="@+id/buttonDeleteRoot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_delete"
@@ -44,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
+            android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_cancel" />
