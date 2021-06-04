@@ -71,7 +71,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         holder.calcProgressBar.setVisibility(View.GONE);
 
         if (item.getRoot1() == 1 || item.getRoot2() == 1) {
-            holder.descriptionTextView.setText("%d is prime");
+            holder.descriptionTextView.setText(String.format("%d is prime", item.getNumber()));
         } else {
             holder.descriptionTextView.setText(String.format("%d=%dx%d", item.getNumber(), item.getRoot1(), item.getRoot2()));
         }
