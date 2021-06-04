@@ -23,6 +23,14 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         this.items = new ArrayList<>();
     }
 
+    public void setItems(ArrayList<RootCalcItem> newItems) {
+        items.clear();
+        items.addAll(newItems);
+        //todo: sort items by the order given in the specs
+
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RootCalcHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
