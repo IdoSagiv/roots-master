@@ -1,6 +1,5 @@
 package idosa.huji.postpc.roots_master;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
-    private final Context context;
+public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcViewHolder> {
     private final ArrayList<RootCalcItem> items;
     public OnClickCallback onDeleteRootCallback = null;
     public OnClickCallback onCancelCalcCallback = null;
 
 
-    public RootCalcListAdapter(Context context) {
+    public RootCalcListAdapter() {
         super();
-        this.context = context;
         this.items = new ArrayList<>();
     }
 
@@ -34,14 +31,14 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
 
     @NonNull
     @Override
-    public RootCalcHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RootCalcViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.root_calc_item, parent, false);
-        return new RootCalcHolder(view);
+        return new RootCalcViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RootCalcHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RootCalcViewHolder holder, int position) {
         RootCalcItem item = items.get(position);
 
         switch (item.getStatus()) {
@@ -63,14 +60,9 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
                 break;
             }
         }
-//        if (item.getCalculationProgress() == RootCalcItem.MAX_PROGRESS) {
-//            setHolderToDoneMode(holder, item);
-//        } else {
-//            setHolderToInProgressMode(holder, item);
-//        }
     }
 
-    private void setHolderToInProgressMode(RootCalcHolder holder, RootCalcItem item) {
+    private void setHolderToInProgressMode(RootCalcViewHolder holder, RootCalcItem item) {
         holder.stopCalcBtn.setVisibility(View.VISIBLE);
         holder.calcProgressBar.setVisibility(View.VISIBLE);
         holder.deleteRootBtn.setVisibility(View.GONE);
@@ -85,7 +77,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         });
     }
 
-    private void setHolderToDoneMode(RootCalcHolder holder, RootCalcItem item) {
+    private void setHolderToDoneMode(RootCalcViewHolder holder, RootCalcItem item) {
         holder.deleteRootBtn.setVisibility(View.VISIBLE);
         holder.stopCalcBtn.setVisibility(View.GONE);
         holder.calcProgressBar.setVisibility(View.GONE);
@@ -102,7 +94,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         });
     }
 
-    private void setHolderToCancelMode(RootCalcHolder holder, RootCalcItem item) {
+    private void setHolderToCancelMode(RootCalcViewHolder holder, RootCalcItem item) {
         holder.deleteRootBtn.setVisibility(View.VISIBLE);
         holder.stopCalcBtn.setVisibility(View.GONE);
         holder.calcProgressBar.setVisibility(View.GONE);
@@ -115,7 +107,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         });
     }
 
-    private void setHolderToFailedMode(RootCalcHolder holder, RootCalcItem item) {
+    private void setHolderToFailedMode(RootCalcViewHolder holder, RootCalcItem item) {
         holder.deleteRootBtn.setVisibility(View.VISIBLE);
         holder.stopCalcBtn.setVisibility(View.GONE);
         holder.calcProgressBar.setVisibility(View.GONE);

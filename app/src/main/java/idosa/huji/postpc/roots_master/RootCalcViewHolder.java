@@ -8,14 +8,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RootCalcHolder extends RecyclerView.ViewHolder {
+public class RootCalcViewHolder extends RecyclerView.ViewHolder {
     View view;
     TextView descriptionTextView;
     ImageView deleteRootBtn;
     ImageView stopCalcBtn;
     ProgressBar calcProgressBar;
 
-    public RootCalcHolder(@NonNull View itemView) {
+    public RootCalcViewHolder(@NonNull View itemView) {
         super(itemView);
         this.view = itemView;
         this.descriptionTextView = itemView.findViewById(R.id.textViewRootCalculationDescription);
