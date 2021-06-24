@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     calculationsItemsHolder.calculationFailed(itemId);
                 }
             }
-            workManager.pruneWork(); // deletes all final state jobs (finished, failed, cancelled) todo: keep?
+//            workManager.pruneWork(); // deletes all final state jobs (finished, failed, cancelled) todo: keep?
         });
 
 
