@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">roots master</string>
+    <string name="no_roots_to_show">no roots to show</string>
+    <string name="screen_title">Roots Master</string>
 </resources>

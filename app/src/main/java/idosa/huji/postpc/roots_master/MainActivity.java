@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -41,11 +42,21 @@ public class MainActivity extends AppCompatActivity {
             calculationsItemsHolder = RootsMasterApplication.getInstance().getItemsDb();
         }
 
-        calculationsItemsHolder.itemsLiveData.observe(this, adapter::setItems);
-
         RecyclerView recyclerView = findViewById(R.id.recyclerViewRootsList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        calculationsItemsHolder.itemsLiveData.observe(this, items -> {
+            TextView noItemsTextView = findViewById(R.id.noItemsTextView);
+            adapter.setItems(items);
+            if (items.isEmpty()) {
+                recyclerView.setVisibility(View.GONE);
+                noItemsTextView.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                noItemsTextView.setVisibility(View.GONE);
+            }
+        });
 
         workInfoLd.observe(this, workersInfo -> {
             for (WorkInfo workInfo : workersInfo) {
