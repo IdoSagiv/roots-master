@@ -85,7 +85,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcViewHolder
         if (item.getRoot1() == 1 || item.getRoot2() == 1) {
             holder.descriptionTextView.setText(String.format("%d is prime", item.getNumber()));
         } else {
-            holder.descriptionTextView.setText(String.format("%d=%dx%d", item.getNumber(), item.getRoot1(), item.getRoot2()));
+            holder.descriptionTextView.setText(String.format("%d = %d x %d", item.getNumber(), item.getRoot1(), item.getRoot2()));
         }
 
         holder.deleteRootBtn.setOnClickListener(v -> {
