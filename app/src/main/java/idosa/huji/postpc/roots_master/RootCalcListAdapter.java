@@ -1,6 +1,5 @@
 package idosa.huji.postpc.roots_master;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
     private final Context context;
@@ -24,11 +25,10 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         this.items = new ArrayList<>();
     }
 
-    public void setItems(ArrayList<RootCalcItem> newItems) {
+    public void setItems(List<RootCalcItem> newItems) {
         items.clear();
         items.addAll(newItems);
-        //todo: sort items by the order given in the specs
-
+        Collections.sort(items);
         notifyDataSetChanged();
     }
 
@@ -43,21 +43,40 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
     @Override
     public void onBindViewHolder(@NonNull RootCalcHolder holder, int position) {
         RootCalcItem item = items.get(position);
-        if (item.getCalculationProgress() == RootCalcItem.MAX_PROGRESS) {
-            setHolderToCalcDoneMode(holder, item);
-        } else {
-            setHolderToOnCalcMode(holder, item);
+
+        switch (item.getStatus()) {
+            case IN_PROGRESS: {
+                setHolderToInProgressMode(holder, item);
+                break;
+            }
+            case DONE: {
+                setHolderToDoneMode(holder, item);
+                break;
+            }
+            case CANCELED: {
+                setHolderToCancelMode(holder, item);
+                break;
+            }
+
+            case FAILED: {
+                setHolderToFailedMode(holder, item);
+                break;
+            }
         }
+//        if (item.getCalculationProgress() == RootCalcItem.MAX_PROGRESS) {
+//            setHolderToDoneMode(holder, item);
+//        } else {
+//            setHolderToInProgressMode(holder, item);
+//        }
     }
 
-    private void setHolderToOnCalcMode(RootCalcHolder holder, RootCalcItem item) {
+    private void setHolderToInProgressMode(RootCalcHolder holder, RootCalcItem item) {
         holder.stopCalcBtn.setVisibility(View.VISIBLE);
         holder.calcProgressBar.setVisibility(View.VISIBLE);
         holder.deleteRootBtn.setVisibility(View.GONE);
 
-        holder.descriptionTextView.setText(String.format("Calculating roots for %d...", item.getNumber()));
+        holder.descriptionTextView.setText(String.format("Calculating roots for %d", item.getNumber()));
 
-        // todo: change progress from somewhere else????
         holder.calcProgressBar.setProgress(item.getCalculationProgress());
 
         holder.stopCalcBtn.setOnClickListener(v -> {
@@ -66,7 +85,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         });
     }
 
-    private void setHolderToCalcDoneMode(RootCalcHolder holder, RootCalcItem item) {
+    private void setHolderToDoneMode(RootCalcHolder holder, RootCalcItem item) {
         holder.deleteRootBtn.setVisibility(View.VISIBLE);
         holder.stopCalcBtn.setVisibility(View.GONE);
         holder.calcProgressBar.setVisibility(View.GONE);
@@ -76,6 +95,32 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcHolder> {
         } else {
             holder.descriptionTextView.setText(String.format("%d=%dx%d", item.getNumber(), item.getRoot1(), item.getRoot2()));
         }
+
+        holder.deleteRootBtn.setOnClickListener(v -> {
+            if (onDeleteRootCallback == null) return;
+            onDeleteRootCallback.onClick(item);
+        });
+    }
+
+    private void setHolderToCancelMode(RootCalcHolder holder, RootCalcItem item) {
+        holder.deleteRootBtn.setVisibility(View.VISIBLE);
+        holder.stopCalcBtn.setVisibility(View.GONE);
+        holder.calcProgressBar.setVisibility(View.GONE);
+
+        holder.descriptionTextView.setText(String.format("Calculating roots for %d cancelled", item.getNumber()));
+
+        holder.deleteRootBtn.setOnClickListener(v -> {
+            if (onDeleteRootCallback == null) return;
+            onDeleteRootCallback.onClick(item);
+        });
+    }
+
+    private void setHolderToFailedMode(RootCalcHolder holder, RootCalcItem item) {
+        holder.deleteRootBtn.setVisibility(View.VISIBLE);
+        holder.stopCalcBtn.setVisibility(View.GONE);
+        holder.calcProgressBar.setVisibility(View.GONE);
+
+        holder.descriptionTextView.setText(String.format("Calculating roots for %d failed", item.getNumber()));
 
         holder.deleteRootBtn.setOnClickListener(v -> {
             if (onDeleteRootCallback == null) return;
