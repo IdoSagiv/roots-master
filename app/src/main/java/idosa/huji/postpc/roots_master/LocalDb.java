@@ -64,14 +64,6 @@ public class LocalDb {
         itemsMutableLiveData.setValue(getCurrentItems());
     }
 
-    public void changeCalculationProgress(RootCalcItem item, int newProgress) {
-        item.setCalculationProgress(newProgress);
-
-        updateItemInSp(item);
-
-        itemsMutableLiveData.setValue(getCurrentItems());
-    }
-
     public void finishCalculation(RootCalcItem item, long root1, long root2, double calculationTime) {
         item.setRoots(root1, root2);
         item.setPrevCalcTimeSec(calculationTime);
@@ -97,7 +89,7 @@ public class LocalDb {
         }
     }
 
-    public void calculationStopped(String itemId, long stoppedAt, double calculationTime) {
+    public void calculationPaused(String itemId, long stoppedAt, double calculationTime) {
         RootCalcItem item = getItem(itemId);
         if (item != null) {
             item.setPrevCalcStopNum(stoppedAt);
