@@ -22,7 +22,6 @@ public class CalculateRootsWorker extends Worker {
 
     public CalculateRootsWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
-        Log.i("CalculateRootsWorker", "Worker created");
         LocalDb db = RootsMasterApplication.getInstance().getItemsDb();
 
         calcItemId = getInputData().getString("calc_item_id");
@@ -32,16 +31,18 @@ public class CalculateRootsWorker extends Worker {
         prevCalcTimeSec = item.getPrevCalcTimeSec();
         int timeToRunSec = getInputData().getInt("time_to_run", DEFAULT_RUNTIME_SEC);
         timeToRunMs = TimeUnit.SECONDS.toMillis(timeToRunSec);
+
+        Log.i("CalculateRootsWorker", "Worker " + getId().toString() + " for " + num + " created");
     }
 
     @NonNull
     @Override
     public Result doWork() {
-        Log.i("CalculateRootsWorker", "Worker started doWork()");
+        Log.i("CalculateRootsWorker", "Worker " + getId().toString() + " for " + num + " started doWork()");
         long timeStartMs = System.currentTimeMillis();
 
         if (num <= 0) {
-            Log.i("CalculateRootsWorker", "Worker failed. Can't calculate roots for non-positive input" + num);
+            Log.i("CalculateRootsWorker", "Worker " + getId().toString() + " for " + num + " failed. Can't calculate roots for non-positive input");
             return Result.failure(new Data.Builder()
                     .putString("reason", "can't calculate roots for non-positive input").build());
         }
@@ -54,11 +55,17 @@ public class CalculateRootsWorker extends Worker {
         // search for roots
         double runUntil = Math.sqrt(num) + 1;
         if (prevStopNum % 2 == 0) prevStopNum--;
+        long lastProgressUpdateTime = System.currentTimeMillis();
         for (long i = prevStopNum; i < runUntil; i += 2) {
-            setProgressAsync(new Data.Builder()
-                    .putString("calcItemId", calcItemId)
-                    .putInt("progress", (int) Math.ceil(100 * i / runUntil))
-                    .build());
+            // update progress every 500 ms
+            if (System.currentTimeMillis() - lastProgressUpdateTime > 200) {
+                lastProgressUpdateTime = System.currentTimeMillis();
+                setProgressAsync(new Data.Builder()
+                        .putString("calcItemId", calcItemId)
+                        .putInt("progress", (int) Math.ceil(100 * i / runUntil))
+                        .build());
+            }
+
             if (num % i == 0) {
                 return buildComputationEndResult(num, i, System.currentTimeMillis() - timeStartMs);
             }
@@ -68,18 +75,18 @@ public class CalculateRootsWorker extends Worker {
             }
         }
 
-        // the original number is prime
+        // the number is prime
         return buildComputationEndResult(num, 1, System.currentTimeMillis() - timeStartMs);
     }
 
     @Override
     public void onStopped() {
         super.onStopped();
-        Log.i("CalculateRootsWorker", "Worker stopped");
+        Log.i("CalculateRootsWorker", "Worker " + getId().toString() + " for " + num + " stopped");
     }
 
     private Result buildComputationEndResult(long origNum, long root1, long calculationTimeMilliSec) {
-        Log.i("CalculateRootsWorker", "Worker finished successfully");
+        Log.i("CalculateRootsWorker", "Worker " + getId().toString() + " for " + num + " finished doWork() successfully");
         return Result.success(
                 new Data.Builder()
                         .putString("calcItemId", calcItemId)
@@ -92,7 +99,7 @@ public class CalculateRootsWorker extends Worker {
     }
 
     private Result buildComputationPauseResult(long origNum, long stoppedAt, long calculationTimeMilliSec) {
-        Log.i("CalculateRootsWorker", "Worker paused");
+        Log.i("CalculateRootsWorker", "Worker " + getId().toString() + " for " + num + " paused");
         return Result.success(
                 new Data.Builder()
                         .putString("calcItemId", calcItemId)
