@@ -7,8 +7,9 @@ This app was written in Android Studio using Java.<br/>
 Calculations are being done in the background using the WorkManager library.
 
 ## Overview
-The app has one screen containing the current and previous calculations.</br>
-During calculation the user can see the progress, ans stop the calculation, and when the calculation is over, the result is presented to the user who can delete the record.</br>
+The app has one screen that contains the current and previous calculations.<br/>
+During the calculation the user can see the progress, and stop the calculation.<br/>
+When the calculation is completed, the result is displayed to the user who can delete the record.<br/>
 <p align="center">
     <img src="screenshots/screenshot.jpeg" height="722" width="352">
 </p>
