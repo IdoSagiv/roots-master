@@ -17,13 +17,14 @@
         android:paddingStart="16dp"
         android:paddingEnd="4dp"
         android:textColor="#555252"
+        android:textIsSelectable="true"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/linearLayoutButtons"
         app:layout_constraintStart_toStartOf="@id/progressBarCalculationProgress"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="calculating root for 123456..." />
+        tools:text="calculating roots for 123456" />
 
     <LinearLayout
         android:id="@+id/linearLayoutButtons"
