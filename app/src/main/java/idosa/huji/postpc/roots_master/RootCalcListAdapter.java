@@ -68,6 +68,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcViewHolder
         holder.deleteRootBtn.setVisibility(View.GONE);
 
         holder.descriptionTextView.setText(String.format("Calculating roots for %d", item.getNumber()));
+        holder.descriptionTextView.setBackgroundResource(R.drawable.light_blue_rect_with_rounded_corners);
 
         holder.calcProgressBar.setProgress(item.getCalculationProgress());
 
@@ -87,6 +88,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcViewHolder
         } else {
             holder.descriptionTextView.setText(String.format("%d = %d x %d", item.getNumber(), item.getRoot1(), item.getRoot2()));
         }
+        holder.descriptionTextView.setBackgroundResource(R.drawable.light_blue_rect_with_rounded_corners);
 
         holder.deleteRootBtn.setOnClickListener(v -> {
             if (onDeleteRootCallback == null) return;
@@ -100,6 +102,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcViewHolder
         holder.calcProgressBar.setVisibility(View.GONE);
 
         holder.descriptionTextView.setText(String.format("Calculating roots for %d cancelled", item.getNumber()));
+        holder.descriptionTextView.setBackgroundResource(R.drawable.light_gray_rect_with_rounded_corners);
 
         holder.deleteRootBtn.setOnClickListener(v -> {
             if (onDeleteRootCallback == null) return;
@@ -113,6 +116,7 @@ public class RootCalcListAdapter extends RecyclerView.Adapter<RootCalcViewHolder
         holder.calcProgressBar.setVisibility(View.GONE);
 
         holder.descriptionTextView.setText(String.format("Calculating roots for %d failed", item.getNumber()));
+        holder.descriptionTextView.setBackgroundResource(R.drawable.light_gray_rect_with_rounded_corners);
 
         holder.deleteRootBtn.setOnClickListener(v -> {
             if (onDeleteRootCallback == null) return;

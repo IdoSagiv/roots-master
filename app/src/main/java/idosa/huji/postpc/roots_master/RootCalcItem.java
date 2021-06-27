@@ -109,15 +109,26 @@ public class RootCalcItem implements Comparable<RootCalcItem> {
      */
     @Override
     public int compareTo(RootCalcItem o) {
-        if (calculationProgress == MAX_PROGRESS) {
-            if (o.calculationProgress < MAX_PROGRESS) {
+        // failed/canceled in the end
+        if ((this.status != CalculationStatus.CANCELED && this.status != CalculationStatus.FAILED) &&
+                (o.status == CalculationStatus.CANCELED || o.status == CalculationStatus.FAILED)) {
+            return -1;
+        }
+        if ((this.status == CalculationStatus.CANCELED || this.status == CalculationStatus.FAILED) &&
+                (o.status != CalculationStatus.CANCELED && o.status != CalculationStatus.FAILED)) {
+            return 1;
+        }
+
+        if (this.status == CalculationStatus.DONE) {
+            if (o.status != CalculationStatus.DONE) {
                 return 1;
             }
             return number.compareTo(o.number);
         }
-        if (o.calculationProgress == MAX_PROGRESS) {
+        if (o.status == CalculationStatus.DONE) {
             return -1;
         }
+
         return number.compareTo(o.number);
     }
 }
