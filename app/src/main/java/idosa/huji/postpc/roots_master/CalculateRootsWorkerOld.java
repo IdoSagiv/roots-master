@@ -10,7 +10,7 @@ import androidx.work.WorkerParameters;
 
 import java.util.concurrent.TimeUnit;
 
-public class CalculateRootsWorker extends Worker {
+public class CalculateRootsWorkerOld extends Worker {
     private static final int DEFAULT_RUNTIME_SEC = 10 * 60; // 10 min
     private static final long MIN_START_NUM = 3L;
 
@@ -20,7 +20,7 @@ public class CalculateRootsWorker extends Worker {
     private final long timeToRunMs;
     private final String calcItemId;
 
-    public CalculateRootsWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public CalculateRootsWorkerOld(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         LocalDb db = RootsMasterApplication.getInstance().getItemsDb();
 
@@ -57,6 +57,9 @@ public class CalculateRootsWorker extends Worker {
         if (prevStopNum % 2 == 0) prevStopNum--;
         long lastProgressUpdateTime = System.currentTimeMillis();
         for (long i = prevStopNum; i < runUntil; i += 2) {
+            if(isStopped()){
+                // todo
+            }
             // update progress every 500 ms
             if (System.currentTimeMillis() - lastProgressUpdateTime > 200) {
                 lastProgressUpdateTime = System.currentTimeMillis();

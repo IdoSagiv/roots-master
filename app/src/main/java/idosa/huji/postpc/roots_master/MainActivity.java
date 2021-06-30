@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         calculationsItemsHolder.updateProgress(id1, progress);
                     }
                 } else if (workInfo.getState() == WorkInfo.State.FAILED) {
-                    calculationsItemsHolder.calculationFailed(itemId);
+                        calculationsItemsHolder.calculationFailed(itemId);
                 }
             }
 //            workManager.pruneWork(); // deletes all final state jobs (finished, failed, cancelled) todo: keep?
@@ -141,7 +141,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startCalculation(RootCalcItem item) {
-        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CalculateRootsWorker.class)
+//        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(CalculateRootsWorker.class)
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(FindRootsWorker.class)
                 .addTag("calc_roots")
                 .setInputData(
                         new Data.Builder()
