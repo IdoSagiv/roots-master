@@ -63,6 +63,7 @@ public class FindRootsLogicTests {
     @Test
     public void when_calculatingRootsOfNum_then_RootShouldBeCorrect() {
         assertCalculationResult(9, 3, 3);
+        assertCalculationResult(128, 64, 2);
     }
 
     @Test
@@ -104,5 +105,41 @@ public class FindRootsLogicTests {
         });
 
         Assert.assertTrue(isFailed[0]);
+    }
+
+    @Test
+    public void when_cancelCalculation_then_calculationStopped() {
+        final boolean[] isStopped = {false};
+
+        FindRootsLogic.findRoots(459, 0, DEF_RUNTIME_MS, new FindRootsListener() {
+            @Override
+            public boolean isStopped() {
+                return true;
+            }
+
+            @Override
+            public void onStopped() {
+                isStopped[0] = true;
+            }
+
+            @Override
+            public void onProgress(int progress) {
+            }
+
+            @Override
+            public void onResult(long root1, long root2, double calc_time_sec) {
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+
+            @Override
+            public void onTimeout(long current, double calc_time_sec) {
+            }
+        });
+
+        Assert.assertTrue(isStopped[0]);
     }
 }
