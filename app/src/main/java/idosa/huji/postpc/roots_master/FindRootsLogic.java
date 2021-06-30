@@ -18,6 +18,7 @@ public class FindRootsLogic {
         }
 
         double runUntil = Math.sqrt(num) + 1;
+        startFrom = Math.max(startFrom, 3);
         if (startFrom % 2 == 0) startFrom--;
         long lastProgressUpdateTime = System.currentTimeMillis();
 
