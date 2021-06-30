@@ -17,6 +17,7 @@ public class RootsMasterApplication extends Application {
         instance = this;
         itemsDb = new LocalDb(this);
         workManager = WorkManager.getInstance(this);
+        workManager.pruneWork();
     }
 
     public static RootsMasterApplication getInstance() {
